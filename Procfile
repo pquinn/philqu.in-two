@@ -1,0 +1,1 @@
+web: gunicorn phil:app --log-file=-
