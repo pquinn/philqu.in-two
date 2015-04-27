@@ -1,2 +1,2 @@
 # philqu.in-two
-run the server with {{./start}}
+run the server with ./start
