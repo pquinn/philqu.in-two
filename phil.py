@@ -20,10 +20,23 @@ def rewindr():
     artists = get_user_top_artists()
     return render_template('rewindr/index.html', artists=artists)
 
+@app.route('/rewindr/day')
+@app.route('/rewindr/day/<username>')
+def rewinder_day(username="phillmatic19"):
+    try:
+        tracks = get_user_year_ago_tracks(username)
+        return render_template('rewindr/playlist.html', tracks=tracks)
+    except ValueError as e:
+        print e
+
+
 @app.route('/rewindr/today')
 @app.route('/rewindr/today/<username>')
-def rewinder_day(username="phillmatic19"):
-    tracks = get_user_recent_tracks(username)
-    return render_template('rewindr/playlist.html', tracks=tracks)
+def rewinder_today(username="phillmatic19"):
+    try:
+        tracks = get_user_recent_tracks(username)
+        return render_template('rewindr/playlist.html', tracks=tracks)
+    except ValueError as e:
+        print e
 
 if __name__ == '__main__': app.run();

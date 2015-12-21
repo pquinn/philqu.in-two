@@ -9,7 +9,7 @@ API_SECRET = "2318d1ad3b1a07b3635c5254d64d84c5"
 username = "phillmatic19"
 #password_hash = pylast.md5("password here")
 
-network = pylast.LastFMNetwork(api_key = API_KEY, api_secret = API_SECRET)
+network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET)
 
 def get_top_artists():
     return network.get_top_artists()
@@ -21,18 +21,26 @@ def get_user_top_artists():
     return network.get_user(username).get_top_artists()
 
 def get_user_recent_tracks(username="phillmatic19"):
+    try:
+        return network.get_user(username).get_recent_tracks(limit=25)
+    except Exception as e:
+        return []
+
+def get_user_year_ago_tracks(username="phillmatic19"):
     from_date = to_timestamp(one_year_ago_today())
     to_date = to_timestamp(one_year_ago_plus_one_day())
-    #print "from_date", from_date
-    #print "to_date", to_date
-    return network.get_user(username).get_recent_tracks(limit=None, time_from=from_date, time_to=to_date)
+    print "from_date", from_date
+    print "to_date", to_date
+    try:
+        return network.get_user(username).get_recent_tracks(limit=25, time_from=from_date, time_to=to_date)
+    except Exception as e:
+        return []
 
 def one_year_ago_today():
     now = datetime.now()
     return subtract_years(now, 1)
 
 def one_year_ago_plus_one_day():
-    now = datetime.now()
     return add_days(one_year_ago_today(), 1)
 
 def subtract_years(d, years):
@@ -43,7 +51,7 @@ def subtract_years(d, years):
 
     """
     try:
-        return d.replace(year = d.year - years, hour=0, minute=0, second=0, microsecond=0)
+        return d.replace(year=d.year - years, hour=0, minute=0, second=0, microsecond=0)
     except ValueError:
         return d - (date(d.year - years, 1, 1) - date(d.year, 1, 1))
 
@@ -55,7 +63,7 @@ def add_days(d, days):
 
     """
     try:
-        return d.replace(day = d.day + days, hour=0, minute=0, second=0, microsecond=0)
+        return d.replace(day=d.day + days, hour=0, minute=0, second=0, microsecond=0)
     except ValueError:
         return d + (date(d.day + days, 1, 1) - date(d.day, 1, 1))
 
