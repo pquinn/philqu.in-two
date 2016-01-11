@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask import render_template, redirect
 from rewindr import *
@@ -22,7 +21,7 @@ def rewindr():
 
 @app.route('/rewindr/day')
 @app.route('/rewindr/day/<username>')
-def rewinder_day(username="phillmatic19"):
+def rewindr_day(username="phillmatic19"):
     try:
         tracks = get_user_year_ago_tracks(username)
         return render_template('rewindr/playlist.html', tracks=tracks)
@@ -32,7 +31,7 @@ def rewinder_day(username="phillmatic19"):
 
 @app.route('/rewindr/today')
 @app.route('/rewindr/today/<username>')
-def rewinder_today(username="phillmatic19"):
+def rewindr_today(username="phillmatic19"):
     try:
         tracks = get_user_recent_tracks(username)
         return render_template('rewindr/playlist.html', tracks=tracks)

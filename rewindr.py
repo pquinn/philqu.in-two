@@ -29,8 +29,8 @@ def get_user_recent_tracks(username="phillmatic19"):
 def get_user_year_ago_tracks(username="phillmatic19"):
     from_date = to_timestamp(one_year_ago_today())
     to_date = to_timestamp(one_year_ago_plus_one_day())
-    print "from_date", from_date
-    print "to_date", to_date
+    # print "from_date", from_date
+    # print "to_date", to_date
     try:
         return network.get_user(username).get_recent_tracks(limit=25, time_from=from_date, time_to=to_date)
     except Exception as e:
