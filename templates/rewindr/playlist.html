@@ -1,8 +1,0 @@
-{% extends "rewindr/base.html" %}
-{% block content %}
-<ol>
-    {% for track in tracks %}
-    <li>{{ track.track }}, {{ track.playback_date }}</li>
-    {% endfor %}
-</ol>
-{% endblock %}

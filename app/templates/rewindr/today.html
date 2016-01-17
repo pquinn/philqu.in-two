@@ -1,0 +1,14 @@
+{% extends "rewindr/base.html" %}
+{% set active_page = active_page|default('today') -%}
+{% block content %}
+<h3 class="uk-panel-title">Today</h3>
+<ol>
+    {% if tracks %}
+        {% for track in tracks %}
+        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        {% endfor %}
+    {% else %}
+        how is this even possible???
+    {% endif %}
+</ol>
+{% endblock %}
