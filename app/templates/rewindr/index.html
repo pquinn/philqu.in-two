@@ -1,0 +1,20 @@
+{% extends "rewindr/base.html" %}
+{% set active_page = active_page|default('rewindr') -%}
+{% block content %}
+<div class="uk-grid">
+    <div class="uk-width-1-2">
+        <ol>
+            {% for artist in artists %}
+            <li>{{ artist.item }}, {{ artist.weight }} plays</li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="uk-width-1-2">
+        <ol>
+            {% for album in albums %}
+            <li>{{ album.item }}, <b>{{ album.weight }} plays</b></li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}

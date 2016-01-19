@@ -1,0 +1,44 @@
+{% extends "rewindr/base.html" %}
+{% set active_page = active_page|default('past') -%}
+{% block content %}
+<h3 class="uk-panel-title">One Year Ago...</h3>
+<ol>
+    {% if tracks.one %}
+        {% for track in tracks.one %}
+        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        {% endfor %}
+    {% else %}
+        WOT??? NOTHING, M8???
+    {% endif %}
+</ol>
+<h3 class="uk-panel-title">Two Years Ago...</h3>
+<ol>
+    {% if tracks.two %}
+        {% for track in tracks.two %}
+        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        {% endfor %}
+    {% else %}
+        WOT??? NOTHING, M8???
+    {% endif %}
+</ol>
+<h3 class="uk-panel-title">Three Years Ago...</h3>
+<ol>
+    {% if tracks.three %}
+        {% for track in tracks.three %}
+        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        {% endfor %}
+    {% else %}
+        WOT??? NOTHING, M8???
+    {% endif %}
+</ol>
+<h3 class="uk-panel-title">Four Years Ago...</h3>
+<ol>
+    {% if tracks.four %}
+        {% for track in tracks.four %}
+        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        {% endfor %}
+    {% else %}
+        WOT??? NOTHING, M8???
+    {% endif %}
+</ol>
+{% endblock %}
