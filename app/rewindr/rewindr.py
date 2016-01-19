@@ -1,8 +1,7 @@
-import pylast, os
+import pylast
 from datetime import date, datetime
 from app import app
 
-# TODO: add these to environment before committing
 API_KEY = app.config.get("LASTFM_KEY")
 API_SECRET = app.config.get("LASTFM_SECRET")
 
