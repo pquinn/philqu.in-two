@@ -1,9 +1,10 @@
-import pylast
+import pylast, os
 from datetime import date, datetime
+from app import app
 
 # TODO: add these to environment before committing
-API_KEY = "7af493837dee39d985a7285c4a121cd6"
-API_SECRET = "2318d1ad3b1a07b3635c5254d64d84c5"
+API_KEY = app.config.get("LASTFM_KEY")
+API_SECRET = app.config.get("LASTFM_SECRET")
 
 # need to authenticate to write
 username = "phillmatic19"
