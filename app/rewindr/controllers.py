@@ -20,7 +20,10 @@ def rewindr_day(username="phillmatic19"):
             'three': get_tracks_for_day(years_ago=3, username=username),
             'four': get_tracks_for_day(years_ago=4, username=username)
         }
-        return render_template('rewindr/past.html', tracks=past_tracks_by_years, active_page='past')
+        return render_template('rewindr/past.html',
+                               tracks=past_tracks_by_years,
+                               active_page='past',
+                               current_time=datetime.now())
     except ValueError as e:
         print e
 
@@ -30,6 +33,7 @@ def rewindr_day(username="phillmatic19"):
 def rewindr_today(username="phillmatic19"):
     try:
         tracks = get_user_recent_tracks(username)
-        return render_template('rewindr/today.html', tracks=tracks, active_page='today')
+        now_playing = get_track_now_playing(username)
+        return render_template('rewindr/today.html', now_playing=now_playing, tracks=tracks, active_page='today')
     except ValueError as e:
         print e

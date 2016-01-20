@@ -1,11 +1,13 @@
 {% extends "rewindr/base.html" %}
 {% set active_page = active_page|default('today') -%}
 {% block content %}
+<h3 class="uk-panel-title">Now Playing</h3>
+<div class="uk-text-primary uk-margin-bottom">{{ now_playing.title }} - {{ now_playing.artist.name }}</div>
 <h3 class="uk-panel-title">Today</h3>
 <ol>
     {% if tracks %}
         {% for track in tracks %}
-        <li>{{ track.track }}, {{ track.playback_date }}</li>
+        <li>{{ track.track.title }} - {{ track.track.artist.name }}, {{ track.playback_date }}</li>
         {% endfor %}
     {% else %}
         how is this even possible???

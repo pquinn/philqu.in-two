@@ -26,14 +26,20 @@ def get_user_recent_tracks(username="phillmatic19"):
     except Exception as e:
         return []
 
-def get_tracks_for_day(years_ago=1, username="phillmatic19"):
+def get_track_now_playing(username="phillmatic19"):
+    try:
+        return network.get_user(username).get_now_playing()
+    except Exception as e:
+        return {}
+
+def get_tracks_for_day(limit=10, years_ago=1, username="phillmatic19"):
     dates = x_years_ago_time_bounds(years_ago)
     from_date = dates[0]
     to_date = dates[1]
-    # print "from_date", from_date
-    # print "to_date", to_date
     try:
-        return network.get_user(username).get_recent_tracks(limit=25, time_from=from_date, time_to=to_date)
+        user = network.get_user(username)
+        tracks = user.get_recent_tracks(limit=limit, cacheable=False, time_from=from_date, time_to=to_date)
+        return tracks
     except Exception as e:
         return []
 
@@ -41,7 +47,7 @@ def x_years_ago_time_bounds(x):
     now = datetime.now()
     x_years_ago = subtract_years(now, x)
     x_years_ago_plus_one_day = add_days(x_years_ago, 1)
-    return x_years_ago, x_years_ago_plus_one_day
+    return to_timestamp(x_years_ago), to_timestamp(x_years_ago_plus_one_day)
 
 def one_year_ago_today():
     now = datetime.now()
@@ -75,4 +81,4 @@ def add_days(d, days):
         return d + (date(d.day + days, 1, 1) - date(d.day, 1, 1))
 
 def to_timestamp(d):
-    return (d - datetime(1970, 1, 1)).total_seconds()
+    return int((d - datetime(1970, 1, 1)).total_seconds())
