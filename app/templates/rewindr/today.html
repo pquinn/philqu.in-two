@@ -1,8 +1,16 @@
 {% extends "rewindr/base.html" %}
+
 {% set active_page = active_page|default('today') -%}
+
+{% block title %}Today{% if username %} - {{ username }}{% endif %}{% endblock %}
+
 {% block content %}
+
+{% if now_playing %}
 <h3 class="uk-panel-title">Now Playing</h3>
 <div class="uk-text-primary uk-margin-bottom">{{ now_playing.title }} - {{ now_playing.artist.name }}</div>
+{% endif %}
+
 <h3 class="uk-panel-title">Today</h3>
 <ol>
     {% if tracks %}

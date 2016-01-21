@@ -2,6 +2,8 @@
 
 {% set active_page = active_page|default('past') -%}
 
+{% block title %}This Day{% if username %} - {{ username }}{% endif %}{% endblock %}
+
 {% block content %}
 
 <h1>{{ current_time.strftime('%B %d') }}</h1>
