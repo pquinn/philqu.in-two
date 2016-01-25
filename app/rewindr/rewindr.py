@@ -1,4 +1,5 @@
 import pylast
+from pylast import PlayedTrack, WSError
 from datetime import date, datetime
 from app import app
 
@@ -36,12 +37,24 @@ def get_tracks_for_day(limit=10, years_ago=1, username="phillmatic19"):
     dates = x_years_ago_time_bounds(years_ago)
     from_date = dates[0]
     to_date = dates[1]
-    try:
-        user = network.get_user(username)
-        tracks = user.get_recent_tracks(limit=limit, cacheable=False, time_from=from_date, time_to=to_date)
-        return tracks
-    except Exception as e:
-        return []
+    user = network.get_user(username)
+    tracks = user.get_recent_tracks(limit=limit, cacheable=False, time_from=from_date, time_to=to_date)
+    # return _get_track_links(tracks)
+    return tracks
+
+def _get_track_links(tracks):
+    linked = []
+    for t in tracks:
+        linked_track = TrackWithLink(t)
+        try:
+            link = network.get_track_play_links([t.track])
+            linked_track.link(link)
+        except WSError as e:
+            print e
+
+        linked.append(linked_track)
+
+    return linked
 
 def x_years_ago_time_bounds(x):
     now = datetime.now()
@@ -82,3 +95,19 @@ def add_days(d, days):
 
 def to_timestamp(d):
     return int((d - datetime(1970, 1, 1)).total_seconds())
+
+class TrackWithLink():
+
+    def __init__(self, track):
+        self._link = None
+        self._track = track
+
+    @property
+    def link(self):
+        return self._link
+
+    def link(self, link):
+        self._link = link
+
+    def track(self):
+        return self._track

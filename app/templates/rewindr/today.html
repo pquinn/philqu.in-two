@@ -1,6 +1,6 @@
 {% extends "rewindr/base.html" %}
-
 {% set active_page = active_page|default('today') -%}
+{% import "rewindr/components.html" as components %}
 
 {% block title %}Today{% if username %} - {{ username }}{% endif %}{% endblock %}
 
@@ -11,14 +11,6 @@
 <div class="uk-text-primary uk-margin-bottom">{{ now_playing.title }} - {{ now_playing.artist.name }}</div>
 {% endif %}
 
-<h3 class="uk-panel-title">Today</h3>
-<ol>
-    {% if tracks %}
-        {% for track in tracks %}
-        <li>{{ track.track.title }} - {{ track.track.artist.name }}, {{ track.playback_date }}</li>
-        {% endfor %}
-    {% else %}
-        how is this even possible???
-    {% endif %}
-</ol>
+{{ components.track_list('Today', tracks) }}
+
 {% endblock %}

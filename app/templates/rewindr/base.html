@@ -19,10 +19,20 @@
     <nav class="uk-width-1-5">
         <ul class="uk-nav uk-nav-side">
             <h3 class="uk-panel-title">Just Some Shit</h3>
-            {% for href, id, caption in navigation_bar %}
-                <li {% if id == active_page %} class="uk-active"{% endif %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
-            {% endfor %}
+            {% if session.username %}
+                {% for href, id, caption in navigation_bar %}
+                <li {% if id == active_page %} class="uk-active"{% endif %}>
+                    <a href="{{ href|e }}">
+                        {{ caption|e }}
+                    </a>
+                </li>
+                {% endfor %}
+            {% endif %}
         </ul>
+        {% if session.username %}
+        <div>{{ session.username }}</div>
+        <a href="{{ url_for('mod_rewindr.clear_session_username') }}"><span class="uk-text-muted">(clear)</span></a>
+        {% endif %}
     </nav>
     <div id="content" class="uk-panel uk-width-4-5">
         {% block content %}{% endblock %}

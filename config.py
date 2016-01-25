@@ -1,10 +1,11 @@
-# Define the application directory
 import os
+
+# Define the application directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Define the database - we are working with
 # SQLite for this example
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'rewindr.db')
 DATABASE_CONNECT_OPTIONS = {}
 
 # Application threads. A common general assumption is
@@ -14,18 +15,16 @@ DATABASE_CONNECT_OPTIONS = {}
 THREADS_PER_PAGE = 2
 
 # Enable protection agains *Cross-site Request Forgery (CSRF)*
-CSRF_ENABLED     = True
+CSRF_ENABLED = True
 
 # Use a secure, unique and absolutely secret key for
 # signing the data.
-CSRF_SESSION_KEY = "secret"
+CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY", "secret")
 
 # Secret key for signing cookies
-SECRET_KEY = "secret"
+SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
 
-from app import app
-app.config.update(
-    DEBUG=os.environ.get("DEBUG_MODE_ENABLED", True),
-    LASTFM_KEY=os.environ.get("LASTFM_KEY"),
-    LASTFM_SECRET=os.environ.get("LASTFM_SECRET")
-)
+DEBUG = os.environ.get("DEBUG_MODE_ENABLED", True)
+
+LASTFM_KEY = os.environ.get("LASTFM_KEY")
+LASTFM_SECRET = os.environ.get("LASTFM_SECRET")

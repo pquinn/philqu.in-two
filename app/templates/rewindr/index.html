@@ -5,20 +5,29 @@
 {% block title %}Rewindr{% if username %} - {{ username }}{% endif %}{% endblock %}
 
 {% block content %}
+{% if username %}
 <div class="uk-grid">
     <div class="uk-width-1-2">
         <ol>
-            {% for artist in artists %}
-            <li>{{ artist.item }}, {{ artist.weight }} plays</li>
+            {% for artist_item in artist_items %}
+            {% set artist = artist_item.item %}
+            <li>{{ artist.name }}, {{ artist_item.weight }} plays</li>
             {% endfor %}
         </ol>
     </div>
     <div class="uk-width-1-2">
         <ol>
-            {% for album in albums %}
-            <li>{{ album.item }}, <b>{{ album.weight }} plays</b></li>
+            {% for album_item in album_items %}
+            {% set album = album_item.item %}
+            <li>{{ album.title }} - {{ album.artist.name }}, <b>{{ album_item.weight }} plays</b></li>
             {% endfor %}
         </ol>
     </div>
 </div>
+{% else %}
+<form class="uk-form" method="post" action="{{ url_for('mod_rewindr.rewindr') }}">
+    <input type="text" placeholder="Username..." class="uk-form-large" name="username">
+    <button class="uk-button">Do It</button>
+</form>
+{% endif %}
 {% endblock %}
