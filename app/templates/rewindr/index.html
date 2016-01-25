@@ -27,7 +27,7 @@
 {% else %}
 <form class="uk-form" method="post" action="{{ url_for('mod_rewindr.rewindr') }}">
     <input type="text" placeholder="Username..." class="uk-form-large" name="username">
-    <button class="uk-button">Do It</button>
+    <button type="button" class="uk-button uk-button-primary uk-button-large">Do It</button>
 </form>
 {% endif %}
 {% endblock %}
