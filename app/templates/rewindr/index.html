@@ -2,10 +2,10 @@
 
 {% set active_page = active_page|default('rewindr') -%}
 
-{% block title %}Rewindr{% if username %} - {{ username }}{% endif %}{% endblock %}
+{% block title %}Rewindr{% if session.username %} - {{ session.username }}{% endif %}{% endblock %}
 
 {% block content %}
-{% if username %}
+{% if session.username %}
 <div class="uk-grid">
     <div class="uk-width-1-2">
         <ol>

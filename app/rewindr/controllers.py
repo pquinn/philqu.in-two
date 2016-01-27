@@ -12,13 +12,20 @@ def rewindr():
             artists = get_user_top_artists(username)
             albums = get_user_top_albums(username)
             return render_template('rewindr/index.html',
-                                   username=username,
                                    artist_items=artists,
                                    album_items=albums)
         else:
             return abort(400)
-    else:
-        return render_template('rewindr/index.html')
+    elif (request.method == 'GET'):
+        username = session['username']
+        if username:
+            artists = get_user_top_artists(username)
+            albums = get_user_top_albums(username)
+            return render_template('rewindr/index.html',
+                                   artist_items=artists,
+                                   album_items=albums)
+        else:
+            redirect_to_home()
 
 @mod_rewindr.route('/clear/')
 def clear_session_username():
