@@ -1,11 +1,11 @@
 {% extends "rewindr/base.html" %}
-
 {% set active_page = active_page|default('rewindr') -%}
+{% set username = session.username -%}
 
-{% block title %}Rewindr{% if session.username %} - {{ session.username }}{% endif %}{% endblock %}
+{% block title %}Rewindr{% if username %} - {{ username }}{% endif %}{% endblock %}
 
 {% block content %}
-{% if session.username %}
+{% if username %}
 <div class="uk-grid">
     <div class="uk-width-1-2">
         <ol>

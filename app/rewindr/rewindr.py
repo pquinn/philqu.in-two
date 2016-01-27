@@ -7,7 +7,7 @@ API_KEY = app.config.get("LASTFM_KEY")
 API_SECRET = app.config.get("LASTFM_SECRET")
 
 # need to authenticate to write
-username = "phillmatic19"
+#username = "phillmatic19"
 #password_hash = pylast.md5("password here")
 
 network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET)
@@ -15,25 +15,25 @@ network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET)
 def get_top_artists():
     return network.get_top_artists()
 
-def get_user_top_albums(username):
+def get_top_albums(username):
     return network.get_user(username).get_top_albums()
 
 def get_user_top_artists(username):
     return network.get_user(username).get_top_artists()
 
-def get_user_recent_tracks(username="phillmatic19"):
+def get_recent_tracks(username):
     try:
         return network.get_user(username).get_recent_tracks(limit=25)
     except Exception as e:
         return []
 
-def get_track_now_playing(username="phillmatic19"):
+def get_track_now_playing(username):
     try:
         return network.get_user(username).get_now_playing()
     except Exception as e:
         return {}
 
-def get_tracks_for_day(limit=10, years_ago=1, username="phillmatic19"):
+def get_tracks_for_day(username, limit=10, years_ago=1):
     dates = x_years_ago_time_bounds(years_ago)
     from_date = dates[0]
     to_date = dates[1]

@@ -1,6 +1,7 @@
 {% extends "rewindr/base.html" %}
 {% from "rewindr/components.html" import track_list, track_table %}
 {% set active_page = active_page|default('past') -%}
+{% set username = session.username -%}
 
 {% block title %}This Day{% if username %} - {{ username }}{% endif %}{% endblock %}
 
@@ -9,7 +10,8 @@
 <h1>{{ current_time.strftime('%B %d') }}</h1>
 
 {% for key, tracks in track_dict.iteritems() %}
-    {% set title = '%s year(s) ago...' % key %}
+    {% set year = current_time.year - key %}
+    {% set title = '{0} year(s) ago... ({1})'.format(key, year) %}
     {{ track_table(title, tracks) }}
 {% endfor %}
 

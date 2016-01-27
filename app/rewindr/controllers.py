@@ -1,5 +1,8 @@
 from rewindr import *
 from flask import render_template, request, abort, session, redirect, url_for, Blueprint
+from datetime import datetime
+
+START_YEAR = 2010
 
 mod_rewindr = Blueprint('mod_rewindr', __name__, url_prefix='/rewindr')
 
@@ -10,7 +13,7 @@ def rewindr():
         if username:
             session['username'] = username
             artists = get_user_top_artists(username)
-            albums = get_user_top_albums(username)
+            albums = get_top_albums(username)
             return render_template('rewindr/index.html',
                                    artist_items=artists,
                                    album_items=albums)
@@ -20,40 +23,37 @@ def rewindr():
         username = session['username']
         if username:
             artists = get_user_top_artists(username)
-            albums = get_user_top_albums(username)
+            albums = get_top_albums(username)
             return render_template('rewindr/index.html',
                                    artist_items=artists,
                                    album_items=albums)
         else:
-            redirect_to_home()
+            return render_template('rewindr/index.html')
+    else:
+        return render_template('rewindr/index.html')
 
 @mod_rewindr.route('/clear/')
 def clear_session_username():
+    # choosing to clear just the username instead of the whole session
     session['username'] = None
     return redirect(url_for('mod_rewindr.rewindr'))
 
-@mod_rewindr.route('/lastyear/')
+@mod_rewindr.route('/past/')
 def rewindr_day():
     username = session['username']
     if username:
-        try:
-            one = get_tracks_for_day(years_ago=1, username=username)
-            two = get_tracks_for_day(years_ago=2, username=username)
-            three = get_tracks_for_day(years_ago=3, username=username)
-            four = get_tracks_for_day(years_ago=4, username=username)
-            past_tracks_by_years = {
-                1: one,
-                2: two,
-                3: three,
-                4: four
-            }
-            return render_template('rewindr/past.html',
-                                   username=username,
-                                   track_dict=past_tracks_by_years,
-                                   active_page='past',
-                                   current_time=datetime.now())
-        except ValueError as e:
-            print e
+        current_year = datetime.now().year
+        past_tracks_by_years = {}
+        for year in range(current_year - 1, START_YEAR, -1):
+            years_ago = current_year - year
+            try:
+                past_tracks_by_years[years_ago] = get_tracks_for_day(years_ago=years_ago, username=username)
+            except ValueError as e:
+                print e
+
+        return render_template('rewindr/past.html',
+                               track_dict=past_tracks_by_years,
+                               current_time=datetime.now())
     else:
         return redirect_to_home()
 
@@ -63,7 +63,7 @@ def rewindr_today():
     username = session['username']
     if username:
         try:
-            tracks = get_user_recent_tracks(username)
+            tracks = get_recent_tracks(username)
             now_playing = get_track_now_playing(username)
             return render_template('rewindr/today.html',
                                    username=username,
