@@ -12,14 +12,18 @@ API_SECRET = app.config.get("LASTFM_SECRET")
 
 network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET)
 
+
 def get_top_artists():
     return network.get_top_artists()
+
 
 def get_top_albums(username):
     return network.get_user(username).get_top_albums()
 
+
 def get_user_top_artists(username):
     return network.get_user(username).get_top_artists()
+
 
 def get_recent_tracks(username):
     try:
@@ -27,11 +31,13 @@ def get_recent_tracks(username):
     except Exception as e:
         return []
 
+
 def get_track_now_playing(username):
     try:
         return network.get_user(username).get_now_playing()
     except Exception as e:
         return {}
+
 
 def get_tracks_for_day(username, limit=10, years_ago=1):
     dates = x_years_ago_time_bounds(years_ago)
@@ -41,6 +47,7 @@ def get_tracks_for_day(username, limit=10, years_ago=1):
     tracks = user.get_recent_tracks(limit=limit, cacheable=False, time_from=from_date, time_to=to_date)
     # return _get_track_links(tracks)
     return tracks
+
 
 def _get_track_links(tracks):
     linked = []
@@ -56,18 +63,22 @@ def _get_track_links(tracks):
 
     return linked
 
+
 def x_years_ago_time_bounds(x):
     now = datetime.now()
     x_years_ago = subtract_years(now, x)
     x_years_ago_plus_one_day = add_days(x_years_ago, 1)
     return to_timestamp(x_years_ago), to_timestamp(x_years_ago_plus_one_day)
 
+
 def one_year_ago_today():
     now = datetime.now()
     return subtract_years(now, 1)
 
+
 def one_year_ago_plus_one_day():
     return add_days(one_year_ago_today(), 1)
+
 
 def subtract_years(d, years):
     """Return a date that's `years` years after the date (or datetime)
@@ -81,6 +92,7 @@ def subtract_years(d, years):
     except ValueError:
         return d - (date(d.year - years, 1, 1) - date(d.year, 1, 1))
 
+
 def add_days(d, days):
     """Return a date that's `days` days after the date (or datetime)
     object `d`. Return the same calendar date (month and day) in the
@@ -93,10 +105,12 @@ def add_days(d, days):
     except ValueError:
         return d + (date(d.day + days, 1, 1) - date(d.day, 1, 1))
 
+
 def to_timestamp(d):
     return int((d - datetime(1970, 1, 1)).total_seconds())
 
-class TrackWithLink():
+
+class TrackWithLink:
 
     def __init__(self, track):
         self._link = None

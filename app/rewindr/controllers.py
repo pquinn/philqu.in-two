@@ -6,21 +6,18 @@ START_YEAR = 2010
 
 mod_rewindr = Blueprint('mod_rewindr', __name__, url_prefix='/rewindr')
 
+
 @mod_rewindr.route('/', methods=['GET', 'POST'])
 def rewindr():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         username = request.form['username']
         if username:
             session['username'] = username
-            artists = get_user_top_artists(username)
-            albums = get_top_albums(username)
-            return render_template('rewindr/index.html',
-                                   artist_items=artists,
-                                   album_items=albums)
+            return redirect_to_home()
         else:
             return abort(400)
-    elif (request.method == 'GET'):
-        username = session['username']
+    elif request.method == 'GET':
+        username = session.get('username')
         if username:
             artists = get_user_top_artists(username)
             albums = get_top_albums(username)
@@ -32,15 +29,17 @@ def rewindr():
     else:
         return render_template('rewindr/index.html')
 
+
 @mod_rewindr.route('/clear/')
 def clear_session_username():
     # choosing to clear just the username instead of the whole session
     session['username'] = None
     return redirect(url_for('mod_rewindr.rewindr'))
 
+
 @mod_rewindr.route('/past/')
 def rewindr_day():
-    username = session['username']
+    username = session.get('username')
     if username:
         current_year = datetime.now().year
         past_tracks_by_years = {}
@@ -60,7 +59,7 @@ def rewindr_day():
 
 @mod_rewindr.route('/today/')
 def rewindr_today():
-    username = session['username']
+    username = session.get('username')
     if username:
         try:
             tracks = get_recent_tracks(username)
@@ -74,6 +73,7 @@ def rewindr_today():
             print e
     else:
         return redirect_to_home()
+
 
 def redirect_to_home():
     return redirect(url_for('mod_rewindr.rewindr'))

@@ -2,6 +2,7 @@ Flask==0.10.1
 Jinja2==2.7.3
 flask-sqlalchemy
 flask-wtf
+flask-testing
 MarkupSafe==0.23
 Werkzeug==0.10.4
 gunicorn==19.3.0
@@ -11,3 +12,4 @@ six==1.9.0
 wsgiref==0.1.2
 APScheduler==3.0.0
 newrelic
+blinker
