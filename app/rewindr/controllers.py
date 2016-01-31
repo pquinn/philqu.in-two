@@ -2,7 +2,7 @@ from rewindr import *
 from flask import render_template, request, abort, session, redirect, url_for, Blueprint
 from datetime import datetime
 
-START_YEAR = 2010
+START_YEAR = 2008
 
 mod_rewindr = Blueprint('mod_rewindr', __name__, url_prefix='/rewindr')
 
@@ -43,7 +43,7 @@ def rewindr_day():
     if username:
         current_year = datetime.now().year
         past_tracks_by_years = {}
-        for year in range(current_year - 1, START_YEAR, -1):
+        for year in range(current_year - 1, START_YEAR - 1, -1):
             years_ago = current_year - year
             try:
                 past_tracks_by_years[years_ago] = get_tracks_for_day(years_ago=years_ago, username=username)

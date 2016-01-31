@@ -1,30 +1,48 @@
 import os
 
-# Define the application directory
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+class Config(object):
 
-# Define the database - we are working with
-# SQLite for this example
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'rewindr.db')
-DATABASE_CONNECT_OPTIONS = {}
+    # Define the application directory
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# Application threads. A common general assumption is
-# using 2 per available processor cores - to handle
-# incoming requests using one and performing background
-# operations using the other.
-THREADS_PER_PAGE = 2
+    # Define the database - we are working with
+    # SQLite for this example
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'rewindr.db')
+    DATABASE_CONNECT_OPTIONS = {}
 
-# Enable protection agains *Cross-site Request Forgery (CSRF)*
-CSRF_ENABLED = True
+    # Application threads. A common general assumption is
+    # using 2 per available processor cores - to handle
+    # incoming requests using one and performing background
+    # operations using the other.
+    THREADS_PER_PAGE = 2
 
-# Use a secure, unique and absolutely secret key for
-# signing the data.
-CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY", "secret")
+    # Enable protection agains *Cross-site Request Forgery (CSRF)*
+    CSRF_ENABLED = True
 
-# Secret key for signing cookies
-SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
+    # Use a secure, unique and absolutely secret key for
+    # signing the data.
+    CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY", "secret")
 
-DEBUG = os.environ.get("DEBUG_MODE_ENABLED", True)
+    # Secret key for signing cookies
+    SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
 
-LASTFM_KEY = os.environ.get("LASTFM_KEY")
-LASTFM_SECRET = os.environ.get("LASTFM_SECRET")
+    LASTFM_KEY = os.environ.get("LASTFM_KEY")
+    LASTFM_SECRET = os.environ.get("LASTFM_SECRET")
+
+
+class ProductionConfig(Config):
+    DEBUG = False
+
+
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class TestingConfig(Config):
+    TESTING = True

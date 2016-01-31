@@ -1,6 +1,6 @@
 import pylast
 from pylast import PlayedTrack, WSError
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from app import app
 
 API_KEY = app.config.get("LASTFM_KEY")
@@ -103,7 +103,7 @@ def add_days(d, days):
     try:
         return d.replace(day=d.day + days, hour=0, minute=0, second=0, microsecond=0)
     except ValueError:
-        return d + (date(d.day + days, 1, 1) - date(d.day, 1, 1))
+        return d + timedelta(days=days)
 
 
 def to_timestamp(d):

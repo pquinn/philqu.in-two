@@ -1,3 +1,4 @@
+import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template
 
@@ -8,7 +9,12 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Configurations
-app.config.from_object('config')
+if 'APP_SETTINGS' in os.environ:
+    print 'loading config from \'APP_SETTINGS\': ' + os.environ['APP_SETTINGS']
+    app.config.from_object(os.environ['APP_SETTINGS'])
+else:
+    print 'no \'APP_SETTINGS\' found; loading config.DevelopmentConfig'
+    app.config.from_object('config.DevelopmentConfig')
 
 # Define the database object which is imported
 # by modules and controllers
