@@ -16,7 +16,7 @@ class RewindrTest(TestCase):
     def test_get_rewindr_no_session_success(self):
         rv = self.client.get('/rewindr/')
         self.assert_200(rv)
-        self.assert_template_used('rewindr/index.html')
+        self.assert_template_used('index.html')
 
     def test_get_rewindr_today_no_session_redirect(self):
         rv = self.client.get('/rewindr/today/')
