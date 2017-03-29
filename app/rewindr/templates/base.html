@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Rewindr{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('mod_rewindr.static', filename='css/uikit.gradient.min.css')}}"/>
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('mod_rewindr.static', filename='js/uikit.min.js')}}"></script>
+    <script src="{{url_for('mod_rewindr.static', filename='js/components/sticky.js')}}"></script>
+</head>
+<body>
+{% set navigation_bar = [
+    (url_for('mod_rewindr.rewindr'), 'rewindr', 'Rewindr'),
+    (url_for('mod_rewindr.rewindr_day'), 'past', 'Years Past'),
+    (url_for('mod_rewindr.rewindr_today'), 'today', 'Recent')
+] -%}
+{% set active_page = active_page|default('rewindr') -%}
+<div class="uk-container uk-grid uk-margin-top uk-margin-bottom" data-uk-grid-margin>
+    <div class="uk-width-1-5">
+        <div class="uk-sticky-placeholder" style="height: 184px; margin: 0px;">
+            <div class="uk-panel" data-uk-sticky="{top:35}" style="margin: 0px;">
+                <ul class="uk-nav uk-nav-side uk-margin-bottom" data-uk-scrollspy-nav="{closest:'li', smoothscroll:true}">
+                    <h3 class="uk-panel-title">Just Some Shit</h3>
+                    {% if session.username %}
+                        {% for href, id, caption in navigation_bar %}
+                        <li {% if id == active_page %} class="uk-active"{% endif %}>
+                            <a href="{{href | e}}">
+                                {{caption | e}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li class="uk-nav-divider"></li>
+                        <li>{{session.username}} <a href="{{url_for('mod_rewindr.clear_session_username')}}"><span class="uk-text-muted">(clear)</span></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="uk-panel uk-width-4-5">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

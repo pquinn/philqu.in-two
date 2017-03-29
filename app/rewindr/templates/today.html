@@ -1,6 +1,6 @@
-{% extends "rewindr/base.html" %}
+{% extends "base.html" %}
 {% set active_page = active_page|default('today') -%}
-{% import "rewindr/components.html" as components %}
+{% import "components.html" as components %}
 
 {% block title %}Today{% if username %} - {{ username }}{% endif %}{% endblock %}
 
@@ -8,9 +8,9 @@
 
 {% if now_playing %}
 <h3 class="uk-panel-title">Now Playing</h3>
-<div class="uk-text-primary uk-margin-bottom">{{ now_playing.title }} - {{ now_playing.artist.name }}</div>
+<div class="uk-text-primary uk-margin-bottom">{{now_playing.title}} - {{now_playing.artist.name}}</div>
 {% endif %}
 
-{{ components.track_list('Today', tracks) }}
+{{components.track_list('Today', tracks)}}
 
 {% endblock %}

@@ -1,7 +1,7 @@
 import unittest
+import flask
 from app import app
 from flask_testing import TestCase
-from flask import session
 
 
 class RewindrTest(TestCase):
@@ -26,17 +26,22 @@ class RewindrTest(TestCase):
         rv = self.client.get('/rewindr/past/')
         self.assert_redirects(rv, '/rewindr/')
 
-    def _test_post_rewindr_with_username(self):
+    def test_post_rewindr_with_username(self):
         username = 'phillmatic19'
-        rv = app.test_client().post('/rewindr/', data=dict(
-            username=username
-        ), follow_redirects=False)
-        with app.test_request_context():
-            self.assertEqual(session.get('username'), username)
+        with app.test_client() as client:
+            rv = client.post('/rewindr/', data=dict(
+                username=username
+            ), follow_redirects=False)
+            assert flask.session['username'] == 'phillmatic19'
 
     def test_post_rewindr_with_no_username(self):
         rv = app.test_client().post('/rewindr/', data={})
         self.assert_400(rv)
+
+    def set_username_in_session(self, username):
+        return app.test_client().post('/rewindr/', data=dict(
+            username=username
+        ), follow_redirects=False)
 
 
 if __name__ == '__main__':

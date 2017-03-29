@@ -1,9 +1,8 @@
 import os
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template
 
 # Import SQLAlchemy
-#from flask.ext.sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import SQLAlchemy
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -18,7 +17,7 @@ else:
 
 # Define the database object which is imported
 # by modules and controllers
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 # Sample HTTP error handling
 @app.errorhandler(404)

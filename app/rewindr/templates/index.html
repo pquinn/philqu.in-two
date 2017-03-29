@@ -1,8 +1,8 @@
-{% extends "rewindr/base.html" %}
+{% extends "base.html" %}
 {% set active_page = active_page|default('rewindr') -%}
 {% set username = session.username -%}
 
-{% block title %}Rewindr{% if username %} - {{ username }}{% endif %}{% endblock %}
+{% block title %}Rewindr{% if username %} - {{username}}{% endif %}{% endblock %}
 
 {% block content %}
 {% if username %}
@@ -11,7 +11,7 @@
         <ol>
             {% for artist_item in artist_items %}
             {% set artist = artist_item.item %}
-            <li>{{ artist.name }}, {{ artist_item.weight }} plays</li>
+            <li>{{artist.name}}, {{artist_item.weight}} plays</li>
             {% endfor %}
         </ol>
     </div>
@@ -19,7 +19,7 @@
         <ol>
             {% for album_item in album_items %}
             {% set album = album_item.item %}
-            <li>{{ album.title }} - {{ album.artist.name }}, <b>{{ album_item.weight }} plays</b></li>
+            <li>{{album.title}} - {{album.artist.name}}, <b>{{album_item.weight}} plays</b></li>
             {% endfor %}
         </ol>
     </div>

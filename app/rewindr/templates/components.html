@@ -1,10 +1,10 @@
 {% macro track_list(title, tracks) -%}
     {% if tracks %}
-    <h3 class="uk-panel-title">{{ title }}</h3>
+    <h3 class="uk-panel-title">{{title}}</h3>
     <ol>
         {% for track_obj in tracks %}
         {% set track = track_obj.track %}
-        <li>{{ track.title }} - {{ track.artist.name }}, {{ track_obj.playback_date }}</li>
+        <li>{{track.title}} - {{track.artist.name}}, {{track_obj.playback_date}}</li>
         {% endfor %}
     </ol>
     {% endif %}
@@ -12,7 +12,7 @@
 
 {% macro track_table(key, tracks) -%}
     {% if tracks %}
-    <h3 class="uk-panel-title">{{ key }}</h3>
+    <h3 class="uk-panel-title">{{key}}</h3>
     <table class="uk-table">
         <thead>
             <th>Title</th>
@@ -23,9 +23,9 @@
         {% for track_obj in tracks %}
         {% set track = track_obj.track %}
         <tr>
-            <td>{{ track.title }}</td>
-            <td>{{ track.artist }}</td>
-            <td>{{ track_obj.playback_date }}</td>
+            <td>{{track.title}}</td>
+            <td>{{track.artist}}</td>
+            <td>{{track_obj.playback_date}}</td>
         </tr>
         {% endfor %}
         </tbody>
