@@ -1,10 +1,11 @@
-from rewindr import *
+from last_fm import *
+from spotify import *
 from flask import render_template, request, abort, session, redirect, url_for, Blueprint
 from datetime import datetime
 
 START_YEAR = 2008
 
-mod_rewindr = Blueprint('mod_rewindr', __name__, url_prefix='/rewindr')
+mod_rewindr = Blueprint('mod_rewindr', __name__, url_prefix='/rewindr', static_folder='static', template_folder='templates')
 
 
 @mod_rewindr.route('/', methods=['GET', 'POST'])
@@ -21,13 +22,13 @@ def rewindr():
         if username:
             artists = get_user_top_artists(username)
             albums = get_top_albums(username)
-            return render_template('rewindr/index.html',
+            return render_template('index.html',
                                    artist_items=artists,
                                    album_items=albums)
         else:
-            return render_template('rewindr/index.html')
+            return render_template('index.html')
     else:
-        return render_template('rewindr/index.html')
+        return render_template('index.html')
 
 
 @mod_rewindr.route('/clear/')
@@ -50,7 +51,7 @@ def rewindr_day():
             except ValueError as e:
                 print e
 
-        return render_template('rewindr/past.html',
+        return render_template('past.html',
                                track_dict=past_tracks_by_years,
                                current_time=datetime.now())
     else:
@@ -64,13 +65,23 @@ def rewindr_today():
         try:
             tracks = get_recent_tracks(username)
             now_playing = get_track_now_playing(username)
-            return render_template('rewindr/today.html',
+            return render_template('today.html',
                                    username=username,
                                    now_playing=now_playing,
-                                   tracks=tracks,
-                                   active_page='today')
+                                   tracks=tracks)
         except ValueError as e:
             print e
+    else:
+        return redirect_to_home()
+
+
+@mod_rewindr.route('/spotify/')
+def spotify():
+    username = session.get('username')
+    if username:
+        tracks = get_recent_tracks(username, limit=20)
+        track_infos = list(get_track_link(track.track.title, track.track.artist.name, track.album) for track in tracks)
+        return render_template('spotify.html', track_infos=track_infos)
     else:
         return redirect_to_home()
 

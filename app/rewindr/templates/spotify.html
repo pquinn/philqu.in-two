@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% set active_page = active_page|default('past') -%}
+{% set username = session.username -%}
+
+{% block title %}Spotify test{% endblock %}
+
+{% block content %}
+<ul>
+    {% for track_info in track_infos %}
+    {% set title = track_info.track_name + ' - ' + track_info.artist_name %}
+    {% if track_info.spotify_link %}
+    <li><a href="{{track_info.spotify_link}}">{{title}}</a></li>
+    {% else %}
+    <li>{{title}}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
