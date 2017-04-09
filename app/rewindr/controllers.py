@@ -75,13 +75,17 @@ def rewindr_today():
         return redirect_to_home()
 
 
-@mod_rewindr.route('/spotify/')
+#some kind of cache might be nice here
+@mod_rewindr.route('/spotify/', methods=['GET', 'POST'])
 def spotify():
     username = session.get('username')
+    tracks = get_recent_tracks(username, limit=20)
+    track_infos = list(get_track_link(track.track.title, track.track.artist.name, track.album) for track in tracks)
     if username:
-        tracks = get_recent_tracks(username, limit=20)
-        track_infos = list(get_track_link(track.track.title, track.track.artist.name, track.album) for track in tracks)
-        return render_template('spotify.html', track_infos=track_infos)
+        if request.method == 'GET':
+            return render_template('spotify.html', track_infos=track_infos)
+        elif request.method == 'POST':
+            return render_template('spotify.html', track_infos=track_infos)
     else:
         return redirect_to_home()
 

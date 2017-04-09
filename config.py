@@ -29,6 +29,10 @@ class Config(object):
     LASTFM_KEY = os.environ.get("LASTFM_KEY")
     LASTFM_SECRET = os.environ.get("LASTFM_SECRET")
 
+    SPOTIPY_CLIENT_ID = os.environ.get("SPOTIPY_CLIENT_ID")
+    SPOTIPY_CLIENT_SECRET = os.environ.get("SPOTIPY_CLIENT_SECRET")
+    SPOTIPY_REDIRECT_URL = "/rewindr/spotify"
+
 
 class ProductionConfig(Config):
     DEBUG = False

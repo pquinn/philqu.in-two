@@ -17,3 +17,4 @@ pylast==1.5.1
 spotipy
 pyen
 fuzzywuzzy
+dogpile.cache

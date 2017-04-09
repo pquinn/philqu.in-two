@@ -1,35 +1,43 @@
 {% macro track_list(title, tracks) -%}
-    {% if tracks %}
-    <h3 class="uk-panel-title">{{title}}</h3>
-    <ol>
-        {% for track_obj in tracks %}
-        {% set track = track_obj.track %}
-        <li>{{track.title}} - {{track.artist.name}}, {{track_obj.playback_date}}</li>
-        {% endfor %}
-    </ol>
-    {% endif %}
+{% if tracks %}
+<h3 class="uk-panel-title">{{title}}</h3>
+<ol>
+    {% for track_obj in tracks %}
+    {% set track = track_obj.track %}
+    <li>{{track.title}} - {{track.artist.name}}, {{track_obj.playback_date}}</li>
+    {% endfor %}
+</ol>
+{% endif %}
 {%- endmacro %}
 
 {% macro track_table(key, tracks) -%}
-    {% if tracks %}
-    <h3 class="uk-panel-title">{{key}}</h3>
-    <table class="uk-table">
-        <thead>
-            <th>Title</th>
-            <th>Artists</th>
-            <th>Playback</th>
-        </thead>
-        <tbody>
-        {% for track_obj in tracks %}
-        {% set track = track_obj.track %}
-        <tr>
-            <td>{{track.title}}</td>
-            <td>{{track.artist}}</td>
-            <td>{{track_obj.playback_date}}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
+{% if tracks %}
+<h3 class="uk-panel-title">{{key}}</h3>
+<table class="uk-table">
+    <thead>
+    <th>Title</th>
+    <th>Artists</th>
+    <th>Playback</th>
+    </thead>
+    <tbody>
+    {% for track_obj in tracks %}
+    {% set track = track_obj.track %}
+    <tr>
+        <td>{{track.title}}</td>
+        <td>{{track.artist}}</td>
+        <td>{{track_obj.playback_date}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{%- endmacro %}
+
+{% macro create_playlist_button(cache_key) -%}
+<p>
+    <form action="/rewindr/spotify/" method="post">
+        <button name="create_playlist" value="create_playlist">Spotify this shit</button>
+    </form>
+</p>
 {%- endmacro %}
 

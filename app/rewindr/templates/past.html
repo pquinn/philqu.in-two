@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "components.html" import track_list, track_table %}
+{% from "components.html" import track_list, track_table, create_playlist_button %}
 {% set active_page = active_page|default('past') -%}
 {% set username = session.username -%}
 
@@ -13,6 +13,7 @@
     {% set year = current_time.year - key %}
     {% set title = '{0} year(s) ago... ({1})'.format(key, year) %}
     {{track_table(title, tracks)}}
+    {{create_playlist_button(year)}}
 {% endfor %}
 
 {% endblock %}
